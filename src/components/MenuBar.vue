@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { appWindow } from '@tauri-apps/api/window'
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+
+const isWindowMaximized=ref(false);
+onMounted(async ()=>{
+  isWindowMaximized.value=await appWindow.isMaximized()
+})
 
 const alwaysOnTop=ref(false);
 function onPinClick(){
@@ -25,8 +30,14 @@ function onCloseClick(){
     <div data-tauri-drag-region class="titlebar">
     <div class="titlebar-button" id="titlebar-pin" @click="onPinClick">
     <img
-    src="https://api.iconify.design/mdi:pin.svg"
-    alt="pin"
+        src="https://api.iconify.design/mdi:pin-off.svg"
+        alt="pin-off"
+        v-if="alwaysOnTop"
+    />
+    <img
+        src="https://api.iconify.design/mdi:pin.svg"
+        alt="pin-on"
+        v-else
     />
 </div>
   <div class="titlebar-button" id="titlebar-minimize" @click="onMinimizeClick">
@@ -40,6 +51,11 @@ function onCloseClick(){
       src="https://api.iconify.design/mdi:window-maximize.svg"
       alt="maximize"
       />
+      <img
+      src="https://api.iconify.design/mdi:window-restore.svg"
+      alt="restore"
+      />
+      {{ isWindowMaximized }}
   </div>
   <div class="titlebar-button" id="titlebar-close" @click="onCloseClick">
       <img src="https://api.iconify.design/mdi:close.svg" alt="close" />

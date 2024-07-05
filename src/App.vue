@@ -1,15 +1,23 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import { computed, onMounted, ref } from "vue";
 import Greet from "./components/Greet.vue";
 import MenuBar from "./components/MenuBar.vue"
+import { appWindow } from "@tauri-apps/api/window";
+
+
 
 </script>
 
 <template>
-  <MenuBar/>
-  <div class="container">
-
+  <div>
+    <MenuBar/>
+    <div class="container">
+    </div>
+    <div class="ml-12 mt-12">
+          {{  isWindowMaximized}}
+      </div>
   </div>
 </template>
 
